@@ -1,28 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Countries</h1>
+    <label for="countries-select">Select Country</label>
+    <select id="countries-select" v-model="getCountries">
+      <option value="" disabled>Select Country</option>
+      <option v-for="(country, index) in countries" :key= "index" value="country.alpha3Code">
+        {{country.name}}</option>
+    </select>
+    <!-- <img :src="countries[].flag"> -->
+
+    <country-detail></country-detail>
+    <button>Add country to favourites</button>
+    <favourite-countries></favourite-countries>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import CountryDetail from './components/CountryDetail.vue'
+import FavouriteListItem from './components/FavouriteListItem.vue'
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "app",
+  data(){
+    return {
+      countries:[],
+      selectedCountry:null,
+      favouriteCountries:[]
+    }
+  },
+  components:{
+    "country-detail":CountryDetail,
+    "favourite-countries":FavouriteListItem,
+  },
+  mounted(){
+    this.getCountries()
+  },
+  methods: {
+    getCountries: function(){
+      fetch("https://restcountries.eu/rest/v2/all")
+      .then(response => response.json())
+      .then(data => this.countries = data)
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
