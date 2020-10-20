@@ -2,12 +2,12 @@
   <div>
     <h1>Countries</h1>
     <label for="countries-select">Select Country</label>
-    <select id="countries-select" v-model="getCountries">
+    <select id="countries-select" v-model="selectedCountry">
       <option value="" disabled>Select Country</option>
-      <option v-for="(country, index) in countries" :key= "index" value="country.alpha3Code">
+      <option v-for="country in countries" :key= "country.alpha3Code" :value="country">
         {{country.name}}</option>
     </select>
-    <!-- <img :src="countries[].flag"> -->
+    <!-- <img :src="selectedCountry.flag" width=200px height=auto> -->
 
     <country-detail></country-detail>
     <button>Add country to favourites</button>
